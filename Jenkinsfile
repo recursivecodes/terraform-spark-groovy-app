@@ -36,11 +36,13 @@ pipeline {
         stage('plan') {
             steps {
                 withCredentials([
-                        file(credentialsId: 'OCI_API_KEY', variable: 'TF_VAR_private_key_path'),
+                        file(credentialsId: 'OCI_API_KEY', variable: 'OCI_API_KEY'),
                         string(credentialsId: 'OCI_FINGERPRINT', variable: 'TF_VAR_fingerprint'),
                     ]) {
                     sh  """
                         cd terraform/
+                        cp $OCI_API_KEY /tmp/oci_api_key.pem
+                        export TF_VAR_private_key_path=/tmp/oci_api_key.pem
                         terraform plan -out=tfplan -input=false
                         """
                 }
