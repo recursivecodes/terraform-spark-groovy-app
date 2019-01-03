@@ -42,6 +42,7 @@ pipeline {
                         cd terraform/
                         echo $TF_VAR_fingerprint >> /tmp/s.txt
                         echo $TF_VAR_private_key_path >> /tmp/s.txt
+                        more $TF_VAR_private_key_path
                         terraform plan -out=tfplan -input=false
                         """
                 }
