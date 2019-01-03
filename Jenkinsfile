@@ -13,6 +13,7 @@ pipeline {
         stage('init') {
             steps {
                 sh  """
+                    cd terraform/
                     terraform init -backend=true -input=false
                     """
             }
