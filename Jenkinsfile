@@ -11,15 +11,15 @@ pipeline {
         echo 'Testing..'
       }
     }
+
+    def tfHome = tool name: 'Terraform', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
+    env.PATH = "${tfHome}:${env.PATH}"
+    cd terraform/
+
     stage('Deploy') {
       steps {
         echo 'Deploying....'
-        step {
-            def tfHome = tool name: 'Terraform', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
-            env.PATH = "${tfHome}:${env.PATH}"
-            cd terraform/
-            sh 'terraform apply'
-        }
+        sh 'terraform apply'
       }
     }
   }
