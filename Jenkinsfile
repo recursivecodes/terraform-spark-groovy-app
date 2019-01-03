@@ -11,7 +11,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                echo ${credentials('oci_api_key')}
+                echo "${credentials('oci_api_key')}"
                 echo "Yeah boi"
                 checkout scm
             }
