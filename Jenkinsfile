@@ -14,12 +14,14 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                withCredentials([file(credentialsId: 'OCI_API_KEY', variable: 'OCI_API_KEY')]) {
-                    sh "export TF_VAR_private_key_path=${OCI_API_KEY}"
-                    sh "echo $TF_VAR_fingerprint"
-                    sh "echo 'shabooya'"
-                    sh "cp $OCI_API_KEY /tmp/booya.pem"
-                    sh "echo 'booyakasha'"
+                withCredentials([
+                        file(credentialsId: 'OCI_API_KEY', variable: 'TF_VAR_private_key_path'),
+                        string(credentialsId: 'OCI_FINGERPRINT', variable: 'TF_VAR_fingerprint'),
+                    ]) {
+                        sh "echo $TF_VAR_fingerprint"
+                        sh "echo $TF_VAR_user_ocid"
+                        sh "echo 'shabooya'"
+                        sh "echo 'booyakasha'"
                 }
                 echo "Yeah boi"
                 checkout scm
