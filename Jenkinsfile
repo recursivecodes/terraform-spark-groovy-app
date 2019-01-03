@@ -37,6 +37,7 @@ pipeline {
                 withCredentials([
                         file(credentialsId: 'OCI_API_KEY', variable: 'TF_VAR_private_key_path'),
                         string(credentialsId: 'OCI_FINGERPRINT', variable: 'TF_VAR_fingerprint'),
+                        string(credentialsId: 'OCI_PRIVATE_KEY_PASSWORD', variable: 'TF_VAR_private_key_password'),
                     ]) {
                     sh  """
                         cd terraform/
@@ -60,6 +61,7 @@ pipeline {
                 withCredentials([
                         file(credentialsId: 'OCI_API_KEY', variable: 'TF_VAR_private_key_path'),
                         string(credentialsId: 'OCI_FINGERPRINT', variable: 'TF_VAR_fingerprint'),
+                        string(credentialsId: 'OCI_PRIVATE_KEY_PASSWORD', variable: 'TF_VAR_private_key_password'),
                     ]) {
                     sh  """
                         cd terraform/
