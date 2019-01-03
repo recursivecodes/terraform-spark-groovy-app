@@ -22,6 +22,7 @@ pipeline {
         stage('plan') {
             steps {
                 sh  """
+                    cd terraform/
                     terraform plan -out=tfplan -input=false
                     """
                 script {
@@ -35,6 +36,7 @@ pipeline {
         stage('apply') {
             steps {
                 sh  """
+                    cd terraform/
                     terraform apply -lock=false -input=false tfplan
                     """
             }
