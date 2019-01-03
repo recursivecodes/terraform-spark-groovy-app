@@ -4,9 +4,7 @@ pipeline {
 
     environment {
         withCredentials([file(credentialsId: 'oci_api_key', variable: 'OCI_API_KEY')]) {
-            sh "export TF_VAR_private_key_path=$OCI_API_KEY"
-            sh "echo $TF_VAR_private_key_path"
-            sh "echo 'heynow'"
+            TF_VAR_private_key_path=$OCI_API_KEY
         }
         TF_VAR_compartment_ocid="ocid1.compartment.oc1..aaaaaaaa7lzppsdxt6j56zhpvy6u5gyrenwyc2e2h4fak5ydvv6kt7anizbq"
         TF_VAR_region="us-phoenix-1"
