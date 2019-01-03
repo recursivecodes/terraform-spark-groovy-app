@@ -14,35 +14,37 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                withCredentials([
-                        file(credentialsId: 'OCI_API_KEY', variable: 'TF_VAR_private_key_path'),
-                        string(credentialsId: 'OCI_FINGERPRINT', variable: 'TF_VAR_fingerprint'),
-                    ]) {
-                        sh "echo $TF_VAR_fingerprint"
-                        sh "echo $TF_VAR_user_ocid"
-                        sh "echo 'shabooya'"
-                        sh "echo 'booyakasha'"
-                }
-                echo "Yeah boi"
                 checkout scm
             }
         }
 
         stage('init') {
             steps {
-                sh  """
-                    cd terraform/
-                    terraform init -backend=true -input=false
-                    """
+                withCredentials([
+                        file(credentialsId: 'OCI_API_KEY', variable: 'TF_VAR_private_key_path'),
+                        string(credentialsId: 'OCI_FINGERPRINT', variable: 'TF_VAR_fingerprint'),
+                    ]) {
+                    sh  """
+                        cd terraform/
+                        terraform init -backend=true -input=false
+                        """
+                }
+
             }
         }
 
         stage('plan') {
             steps {
-                sh  """
-                    cd terraform/
-                    terraform plan -out=tfplan -input=false
-                    """
+                withCredentials([
+                        file(credentialsId: 'OCI_API_KEY', variable: 'TF_VAR_private_key_path'),
+                        string(credentialsId: 'OCI_FINGERPRINT', variable: 'TF_VAR_fingerprint'),
+                    ]) {
+                    sh  """
+                        cd terraform/
+                        terraform plan -out=tfplan -input=false
+                        """
+                }
+
                 script {
                   timeout(time: 10, unit: 'MINUTES') {
                     input(id: "Deploy Gate", message: "Deploy App?", ok: 'Deploy')
@@ -53,10 +55,16 @@ pipeline {
 
         stage('apply') {
             steps {
-                sh  """
-                    cd terraform/
-                    terraform apply -lock=false -input=false tfplan
-                    """
+                withCredentials([
+                        file(credentialsId: 'OCI_API_KEY', variable: 'TF_VAR_private_key_path'),
+                        string(credentialsId: 'OCI_FINGERPRINT', variable: 'TF_VAR_fingerprint'),
+                    ]) {
+                    sh  """
+                        cd terraform/
+                        terraform apply -lock=false -input=false tfplan
+                        """
+                }
+
             }
         }
     }
