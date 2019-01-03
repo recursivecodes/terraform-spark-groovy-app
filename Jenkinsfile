@@ -2,10 +2,6 @@ pipeline {
 
     agent any
 
-    environment {
-        TERRAFORM_CMD = 'docker run --network host " -w /app -v ${HOME}/.aws:/root/.aws -v ${HOME}/.ssh:/root/.ssh -v `pwd`:/app hashicorp/terraform:light'
-    }
-
     stages {
 
         stage('Checkout') {
@@ -14,18 +10,10 @@ pipeline {
             }
         }
 
-        stage('pull latest light terraform image') {
-            steps {
-                sh  """
-                    docker pull hashicorp/terraform:light
-                    """
-            }
-        }
-
         stage('init') {
             steps {
                 sh  """
-                    ${TERRAFORM_CMD} init -backend=true -input=false
+                    terraform init -backend=true -input=false
                     """
             }
         }
@@ -33,7 +21,7 @@ pipeline {
         stage('plan') {
             steps {
                 sh  """
-                    ${TERRAFORM_CMD} plan -out=tfplan -input=false
+                    terraform plan -out=tfplan -input=false
                     """
                 script {
                   timeout(time: 10, unit: 'MINUTES') {
@@ -46,7 +34,7 @@ pipeline {
         stage('apply') {
             steps {
                 sh  """
-                    ${TERRAFORM_CMD} apply -lock=false -input=false tfplan
+                    terraform apply -lock=false -input=false tfplan
                     """
             }
         }
