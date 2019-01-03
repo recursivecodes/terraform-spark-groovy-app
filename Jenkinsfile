@@ -11,12 +11,12 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                withCredentials([file(credentialsId: 'oci_api_key', variable: 'oci_api_key')] {
+                withCredentials([file(credentialsId: 'oci_api_key', variable: 'oci_api_key')]) {
                     sh "echo $oci_api_key"
                     sh "echo 'booyah'"
-                    echo "Yeah boi"
-                    checkout scm
                 }
+                echo "Yeah boi"
+                checkout scm
             }
         }
 
