@@ -1,26 +1,45 @@
 pipeline {
+
   agent any
-  stages {
-    stage('Build') {
-      steps {
-        echo 'Building..'
-      }
-    }
-    stage('Test') {
-      steps {
-        echo 'Testing..'
-      }
-    }
 
-    stage('Deploy') {
-        def tfHome = tool name: 'Terraform', type: 'com.cloudbees.jenkins.plugins.customtools.CustomTool'
-        env.PATH = "${tfHome}:${env.PATH}"
-        cd terraform/
-
-        steps {
-            echo 'Deploying....'
-            sh 'terraform init'
-        }
-    }
+  environment {
   }
+
+  stages {
+
+    stage('Checkout') {
+      steps {
+        checkout scm
+        sh 'mkdir -p creds'
+        sh 'echo $SVC_ACCOUNT_KEY | base64 -d > ./creds/serviceaccount.json'
+      }
+    }
+
+    stage('TF Plan') {
+      steps {
+        container('terraform') {
+          sh 'terraform init'
+          sh 'terraform plan -out myplan'
+        }
+      }
+    }
+
+    stage('Approval') {
+      steps {
+        script {
+          def userInput = input(id: 'confirm', message: 'Apply Terraform?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Apply terraform', name: 'confirm'] ])
+        }
+      }
+    }
+
+    stage('TF Apply') {
+      steps {
+        container('terraform') {
+          sh 'terraform apply -input=false myplan'
+        }
+      }
+    }
+
+  }
+
 }
