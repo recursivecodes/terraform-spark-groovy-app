@@ -4,6 +4,7 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Building..'
+        sh 'terraform apply'
       }
     }
     stage('Test') {
