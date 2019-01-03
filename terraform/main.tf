@@ -3,7 +3,7 @@ variable "region" {}
 
 provider "oci" {
   auth = "InstancePrincipal"
-  region = "us-phoenix-1"
+  region = "${var.region}"
 }
 
 data "oci_identity_availability_domains" "ads" {
