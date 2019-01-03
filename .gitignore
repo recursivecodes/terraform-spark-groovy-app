@@ -1,0 +1,7 @@
+.terraform
+*.tfstate
+*.tfstate*
+build/
+.gradle
+.idea
+*.iml
