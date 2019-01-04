@@ -21,6 +21,6 @@ module "tag-module" {
   }
 
   providers = {
-    "oci-ash" = "oci-ash"
+    oci = "oci-ash"
   }
 }
