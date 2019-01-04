@@ -37,6 +37,8 @@ pipeline {
                         file(credentialsId: 'OCI_API_KEY', variable: 'TF_VAR_private_key_path'),
                         string(credentialsId: 'OCI_FINGERPRINT', variable: 'TF_VAR_fingerprint'),
                         string(credentialsId: 'OCI_PRIVATE_KEY_PASSWORD', variable: 'TF_VAR_private_key_password'),
+                        string(credentialsId: 'ID_SPARK_TERRAFORM_PRIVATE', variable: 'ID_SPARK_TERRAFORM_PRIVATE'),
+                        string(credentialsId: 'ID_SPARK_TERRAFORM', variable: 'ID_SPARK_TERRAFORM'),
                     ]) {
                     sh  """
                         cd terraform/
@@ -58,6 +60,8 @@ pipeline {
                         file(credentialsId: 'OCI_API_KEY', variable: 'TF_VAR_private_key_path'),
                         string(credentialsId: 'OCI_FINGERPRINT', variable: 'TF_VAR_fingerprint'),
                         string(credentialsId: 'OCI_PRIVATE_KEY_PASSWORD', variable: 'TF_VAR_private_key_password'),
+                        string(credentialsId: 'ID_SPARK_TERRAFORM_PRIVATE', variable: 'ID_SPARK_TERRAFORM_PRIVATE'),
+                        string(credentialsId: 'ID_SPARK_TERRAFORM', variable: 'ID_SPARK_TERRAFORM'),
                     ]) {
                     sh  """
                         cd terraform/
