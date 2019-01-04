@@ -37,13 +37,11 @@ pipeline {
                         file(credentialsId: 'OCI_API_KEY', variable: 'TF_VAR_private_key_path'),
                         string(credentialsId: 'OCI_FINGERPRINT', variable: 'TF_VAR_fingerprint'),
                         string(credentialsId: 'OCI_PRIVATE_KEY_PASSWORD', variable: 'TF_VAR_private_key_password'),
-                        file(credentialsId: 'ID_SPARK_TERRAFORM_PRIVATE', variable: 'ID_SPARK_TERRAFORM_PRIVATE'),
-                        file(credentialsId: 'ID_SPARK_TERRAFORM', variable: 'ID_SPARK_TERRAFORM'),
+                        file(credentialsId: 'ID_SPARK_TERRAFORM_PRIVATE', variable: 'TF_VAR_ssh_private_key'),
+                        file(credentialsId: 'ID_SPARK_TERRAFORM', variable: 'TF_VAR_ssh_public_key'),
                     ]) {
                     sh  """
                         cd terraform/
-                        export TF_VAR_ssh_public_key="${ID_SPARK_TERRAFORM}"
-                        export TF_VAR_ssh_private_key="${ID_SPARK_TERRAFORM_PRIVATE}"
                         terraform plan -out=tfplan -input=false
                         """
                 }
@@ -62,17 +60,12 @@ pipeline {
                         file(credentialsId: 'OCI_API_KEY', variable: 'TF_VAR_private_key_path'),
                         string(credentialsId: 'OCI_FINGERPRINT', variable: 'TF_VAR_fingerprint'),
                         string(credentialsId: 'OCI_PRIVATE_KEY_PASSWORD', variable: 'TF_VAR_private_key_password'),
-                        file(credentialsId: 'ID_SPARK_TERRAFORM_PRIVATE', variable: 'ID_SPARK_TERRAFORM_PRIVATE'),
-                        file(credentialsId: 'ID_SPARK_TERRAFORM', variable: 'ID_SPARK_TERRAFORM'),
+                        file(credentialsId: 'ID_SPARK_TERRAFORM_PRIVATE', variable: 'TF_VAR_ssh_private_key'),
+                        file(credentialsId: 'ID_SPARK_TERRAFORM', variable: 'TF_VAR_ssh_public_key'),
                     ]) {
                     sh  """
-                        echo "${TF_VAR_private_key_password}" >> /tmp/test.txt
-                        echo "${TF_VAR_private_key_path}" >> /tmp/test.txt
-                        echo "${TF_VAR_fingerprint}" >> /tmp/test.txt
-                        echo "echo" >> /tmp/test.txt
+                        env
                         cd terraform/
-                        export TF_VAR_ssh_public_key="${ID_SPARK_TERRAFORM}"
-                        export TF_VAR_ssh_private_key="${ID_SPARK_TERRAFORM_PRIVATE}"
                         TF_LOG=DEBUG OCI_GO_SDK_DEBUG=1 terraform apply -lock=false -input=false tfplan 
                         """
                 }
