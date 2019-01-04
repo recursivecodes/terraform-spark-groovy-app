@@ -8,5 +8,5 @@ provider "oci" {
 }
 
 output "test" {
-  value = "${var}"
+  value = "${var.private_key_password}, ${var.private_key_path}, ${var.fingerprint}"
 }
