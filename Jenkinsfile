@@ -42,7 +42,9 @@ pipeline {
                     ]) {
                     sh  """
                         cd terraform/
-                        terraform plan -out=tfplan -input=false -var ssh_public_key="${ID_SPARK_TERRAFORM.absolutePath()}" -var ssh_private_key="${ID_SPARK_TERRAFORM_PRIVATE.absolutePath()}"
+                        export TF_VAR_ssh_public_key="${ID_SPARK_TERRAFORM}"
+                        export TF_VAR_ssh_private_key="${ID_SPARK_TERRAFORM_PRIVATE}"
+                        terraform plan -out=tfplan -input=false
                         """
                 }
 
@@ -65,7 +67,9 @@ pipeline {
                     ]) {
                     sh  """
                         cd terraform/
-                        terraform apply -lock=false -input=false tfplan -var ssh_public_key="${ID_SPARK_TERRAFORM.absolutePath()}" -var ssh_private_key="${ID_SPARK_TERRAFORM_PRIVATE.absolutePath()}"
+                        export TF_VAR_ssh_public_key="${ID_SPARK_TERRAFORM}"
+                        export TF_VAR_ssh_private_key="${ID_SPARK_TERRAFORM_PRIVATE}"
+                        terraform apply -lock=false -input=false tfplan 
                         """
                 }
 
