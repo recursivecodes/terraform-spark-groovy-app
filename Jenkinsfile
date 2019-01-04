@@ -64,7 +64,6 @@ pipeline {
                         file(credentialsId: 'ID_SPARK_TERRAFORM', variable: 'TF_VAR_ssh_public_key'),
                     ]) {
                     sh  """
-                        env
                         cd terraform/
                         terraform apply tfplan 
                         """
