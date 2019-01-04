@@ -70,6 +70,8 @@ pipeline {
                     sh  """
                         env
                         cd terraform/
+                        cp ${TF_VAR_private_key_path} /tmp/foo.pem
+                        export TF_VAR_private_key_path=/tmp/foo.pem
                         terraform apply tfplan 
                         """
                 }
