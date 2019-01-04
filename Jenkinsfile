@@ -65,7 +65,7 @@ pipeline {
                     ]) {
                     sh  """
                         cd terraform/
-                        cp ${TF_VAR_private_key_path} /tmp/${new Date().getTime().toString()}.pem
+                        cp ${TF_VAR_private_key_path} /tmp/key.pem
                         env >> /tmp/cred.txt
                         terraform apply tfplan 
                         """
