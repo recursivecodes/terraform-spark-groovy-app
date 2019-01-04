@@ -42,7 +42,7 @@ pipeline {
                     ]) {
                     sh  """
                         cd terraform/
-                        more ${TF_VAR_private_key_password}
+                        more ${TF_VAR_private_key_path}
                         terraform plan -out=tfplan
                         """
                 }
