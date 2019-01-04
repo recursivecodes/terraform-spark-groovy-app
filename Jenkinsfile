@@ -28,7 +28,6 @@ pipeline {
                         terraform init -backend=true -input=false
                         """
                 }
-
             }
         }
 
