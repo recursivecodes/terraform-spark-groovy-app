@@ -73,7 +73,7 @@ pipeline {
                         cd terraform/
                         export TF_VAR_ssh_public_key="${ID_SPARK_TERRAFORM}"
                         export TF_VAR_ssh_private_key="${ID_SPARK_TERRAFORM_PRIVATE}"
-                        terraform apply -lock=false -input=false tfplan 
+                        TF_LOG=DEBUG OCI_GO_SDK_DEBUG=1 terraform apply -lock=false -input=false tfplan 
                         """
                 }
 
