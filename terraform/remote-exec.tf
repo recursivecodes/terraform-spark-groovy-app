@@ -8,7 +8,7 @@ resource "null_resource" "remote-exec" {
       timeout     = "30m"
       host        = "${oci_core_instance.TFInstance.*.public_ip[count.index % var.NumInstances]}"
       user        = "opc"
-      private_key = "${var.ssh_private_key}"
+      private_key = "${file(var.ssh_private_key)}"
     }
 
     inline = [

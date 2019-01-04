@@ -28,7 +28,7 @@ resource "oci_core_instance" "TFInstance" {
   #preserve_boot_volume = true
 
   metadata {
-    ssh_authorized_keys = "${var.ssh_public_key}"
+    ssh_authorized_keys = "${file(var.ssh_public_key)}"
     user_data           = "${base64encode(file(var.BootStrapFile))}"
   }
   defined_tags = "${
