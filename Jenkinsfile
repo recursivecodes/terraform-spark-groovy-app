@@ -42,7 +42,7 @@ pipeline {
                     ]) {
                     sh  """
                         cd terraform/
-                        terraform plan -out=tfplan -input=false
+                        terraform plan -out=tfplan
                         """
                 }
 
@@ -66,7 +66,7 @@ pipeline {
                     sh  """
                         env
                         cd terraform/
-                        TF_LOG=DEBUG OCI_GO_SDK_DEBUG=1 terraform apply -lock=false -input=false tfplan 
+                        TF_LOG=DEBUG OCI_GO_SDK_DEBUG=1 terraform tfplan 
                         """
                 }
 
