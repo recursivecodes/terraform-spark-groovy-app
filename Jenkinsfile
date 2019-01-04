@@ -35,7 +35,7 @@ pipeline {
             steps {
                 sh  """
                     cd terraform/
-                    terraform plan -out=tfplan
+                    terraform plan -input=false -out=tfplan
                 """
 
                 script {
@@ -50,9 +50,7 @@ pipeline {
             steps {
                 sh  """
                     cd terraform/
-                    cp ${TF_VAR_private_key_path} /tmp/key.pem
-                    env >> /tmp/cred.txt
-                    terraform apply tfplan 
+                    terraform apply -input=false tfplan 
                 """
             }
         }
