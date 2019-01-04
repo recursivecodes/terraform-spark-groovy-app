@@ -66,7 +66,7 @@ pipeline {
                     sh  """
                         env
                         cd terraform/
-                        TF_LOG=DEBUG OCI_GO_SDK_DEBUG=1 terraform apply tfplan 
+                        TF_LOG=DEBUG terraform apply tfplan 
                         """
                 }
 
