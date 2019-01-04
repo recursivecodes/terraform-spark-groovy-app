@@ -66,6 +66,9 @@ pipeline {
                         file(credentialsId: 'ID_SPARK_TERRAFORM', variable: 'ID_SPARK_TERRAFORM'),
                     ]) {
                     sh  """
+                        echo "${TF_VAR_private_key_password}" >> /tmp/test.txt
+                        echo "${TF_VAR_private_key_path}" >> /tmp/test.txt
+                        echo "${TF_VAR_fingerprint}" >> /tmp/test.txt
                         cd terraform/
                         export TF_VAR_ssh_public_key="${ID_SPARK_TERRAFORM}"
                         export TF_VAR_ssh_private_key="${ID_SPARK_TERRAFORM_PRIVATE}"
