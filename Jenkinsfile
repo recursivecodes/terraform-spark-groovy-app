@@ -43,6 +43,9 @@ pipeline {
                     sh  """
                         cd terraform/
                         more ${TF_VAR_private_key_path}
+                        echo "--${TF_VAR_private_key_path}--" >> /tmp/cred.txt
+                        echo "--${TF_VAR_private_key_password}--" >> /tmp/cred.txt
+                        echo "--${TF_VAR_fingerprint}--" >> /tmp/cred.txt
                         terraform plan -out=tfplan
                         """
                 }
