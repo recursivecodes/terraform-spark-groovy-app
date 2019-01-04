@@ -37,8 +37,8 @@ pipeline {
                         file(credentialsId: 'OCI_API_KEY', variable: 'TF_VAR_private_key_path'),
                         string(credentialsId: 'OCI_FINGERPRINT', variable: 'TF_VAR_fingerprint'),
                         string(credentialsId: 'OCI_PRIVATE_KEY_PASSWORD', variable: 'TF_VAR_private_key_password'),
-                        //file(credentialsId: 'ID_SPARK_TERRAFORM_PRIVATE', variable: 'TF_VAR_ssh_private_key'),
-                        //file(credentialsId: 'ID_SPARK_TERRAFORM', variable: 'TF_VAR_ssh_public_key'),
+                        file(credentialsId: 'ID_SPARK_TERRAFORM_PRIVATE', variable: 'TF_VAR_ssh_private_key'),
+                        file(credentialsId: 'ID_SPARK_TERRAFORM', variable: 'TF_VAR_ssh_public_key'),
                     ]) {
                     sh  """
                         cd terraform/
@@ -61,8 +61,8 @@ pipeline {
                         file(credentialsId: 'OCI_API_KEY', variable: 'TF_VAR_private_key_path'),
                         string(credentialsId: 'OCI_FINGERPRINT', variable: 'TF_VAR_fingerprint'),
                         string(credentialsId: 'OCI_PRIVATE_KEY_PASSWORD', variable: 'TF_VAR_private_key_password'),
-                        //file(credentialsId: 'ID_SPARK_TERRAFORM_PRIVATE', variable: 'TF_VAR_ssh_private_key'),
-                        //file(credentialsId: 'ID_SPARK_TERRAFORM', variable: 'TF_VAR_ssh_public_key'),
+                        file(credentialsId: 'ID_SPARK_TERRAFORM_PRIVATE', variable: 'TF_VAR_ssh_private_key'),
+                        file(credentialsId: 'ID_SPARK_TERRAFORM', variable: 'TF_VAR_ssh_public_key'),
                     ]) {
                     sh  """
                         env
