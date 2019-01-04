@@ -43,7 +43,6 @@ pipeline {
                     sh  """
                         cd terraform/
                         terraform plan -out=tfplan
-                        terraform graph tfplan 
                         """
                 }
 
