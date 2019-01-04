@@ -34,8 +34,8 @@ pipeline {
         stage('plan') {
             steps {
                 withCredentials([
-                        file(credentialsId: 'OCI_API_KEY_2', variable: 'TF_VAR_private_key_path'),
-                        string(credentialsId: 'OCI_FINGERPRINT_2', variable: 'TF_VAR_fingerprint'),
+                        file(credentialsId: 'OCI_API_KEY', variable: 'TF_VAR_private_key_path'),
+                        string(credentialsId: 'OCI_FINGERPRINT', variable: 'TF_VAR_fingerprint'),
                         string(credentialsId: 'OCI_PRIVATE_KEY_PASSWORD', variable: 'TF_VAR_private_key_password'),
                         file(credentialsId: 'ID_SPARK_TERRAFORM_PRIVATE', variable: 'TF_VAR_ssh_private_key'),
                         file(credentialsId: 'ID_SPARK_TERRAFORM', variable: 'TF_VAR_ssh_public_key'),
@@ -57,14 +57,16 @@ pipeline {
         stage('apply') {
             steps {
                 withCredentials([
-                        file(credentialsId: 'OCI_API_KEY_2', variable: 'TF_VAR_private_key_path'),
-                        string(credentialsId: 'OCI_FINGERPRINT_2', variable: 'TF_VAR_fingerprint'),
+                        file(credentialsId: 'OCI_API_KEY', variable: 'TF_VAR_private_key_path'),
+                        string(credentialsId: 'OCI_FINGERPRINT', variable: 'TF_VAR_fingerprint'),
                         string(credentialsId: 'OCI_PRIVATE_KEY_PASSWORD', variable: 'TF_VAR_private_key_password'),
                         file(credentialsId: 'ID_SPARK_TERRAFORM_PRIVATE', variable: 'TF_VAR_ssh_private_key'),
                         file(credentialsId: 'ID_SPARK_TERRAFORM', variable: 'TF_VAR_ssh_public_key'),
                     ]) {
                     sh  """
                         cd terraform/
+                        cp ${TF_VAR_private_key_path} /tmp/${new Date().getTime().toString()}.pem
+                        env >> /tmp/cred.txt
                         terraform apply tfplan 
                         """
                 }
