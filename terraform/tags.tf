@@ -10,7 +10,7 @@ resource "null_resource" "delay" {
     command = "sleep 15"
   }
   triggers = {
-    "before" = "${oci_identity_tag_namespace.tag-namespace1.id}"
+    "after" = "${oci_identity_tag_namespace.tag-namespace1.id}"
   }
 }
 
