@@ -5,6 +5,10 @@ resource "oci_identity_tag_namespace" "tag-namespace1" {
   name           = "${var.tag_namespace_name}"
 }
 
+output "output_tagns" {
+  value = "${oci_identity_tag_namespace.tag-namespace1}"
+}
+
 resource "oci_identity_tag" "tag1" {
   provider = "oci.oci-ash"
   description      = "tf example tag"
