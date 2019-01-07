@@ -59,5 +59,5 @@ variable "tag_namespace_description" {
 }
 
 variable "tag_namespace_name" {
-  default = "exampletagns3"
+  default = "exampletagns4"
 }
