@@ -5,8 +5,13 @@ resource "oci_identity_tag_namespace" "tag-namespace1" {
   name           = "${var.tag_namespace_name}"
 }
 
-output "output_tagns" {
-  value = "${oci_identity_tag_namespace.tag-namespace1.id}"
+resource "null_resource" "delay" {
+  provisioner "local-exec" {
+    command = "sleep 15"
+  }
+  triggers = {
+    "before" = "${oci_identity_tag_namespace.tag-namespace1.id}"
+  }
 }
 
 resource "oci_identity_tag" "tag1" {
