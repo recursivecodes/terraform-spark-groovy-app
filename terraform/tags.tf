@@ -6,7 +6,7 @@ resource "oci_identity_tag_namespace" "tag-namespace1" {
 }
 
 output "output_tagns" {
-  value = "${oci_identity_tag_namespace.tag-namespace1}"
+  value = "${oci_identity_tag_namespace.tag-namespace1.id}"
 }
 
 resource "oci_identity_tag" "tag1" {
